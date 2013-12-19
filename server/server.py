@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Small socket server to interact with the led stripe from a remote client
 
 This should be called with the amount of leds in the stripe as argument

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """The main file to interact with the LED stripe"""
 import array
 
