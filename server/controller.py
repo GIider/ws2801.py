@@ -4,12 +4,14 @@ import array
 
 import fcntl
 
+__all__ = ['get_color', 'LedStripe']
+
 NUL = chr(0)
 SPI_IOC_WR_MAX_SPEED_HZ = 0x40046b04
 
 
 def get_color(r, g, b):
-    """Bitshift the red, green and blue components around to get the proper bytes that represent that color"""
+    """Bitshift the red, green and blue components around to get the proper bits that represent that color"""
     return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF)
 
 
@@ -23,6 +25,7 @@ class LedStripe(object):
 
     # I am not really sure what this does yet :-)
     def set_speed(self, speed=400000):
+        """Makes things faster, I guess?"""
         with open('/dev/spidev0.0', 'wb') as spidev:
             fcntl.ioctl(spidev, SPI_IOC_WR_MAX_SPEED_HZ, array.array('L', [speed]))
 
@@ -38,7 +41,13 @@ class LedStripe(object):
         self._leds[index] = color
 
     def set_all_pixels(self, hex_string):
-        """Change the color of all pixels in the stripe"""
+        """Change the color of all pixels in the stripe
+
+        Expects a hex string with the colors you want to display. Every LED has 6 digits, respectively 2 for each
+        color component.
+
+        Example: Turning the first LED red, the next one green and the third blue: FF000000FF000000FF
+        """
         pixels_available = self.amount_of_leds
 
         hex_string = hex_string.ljust(pixels_available * 6, '0')
@@ -53,8 +62,8 @@ class LedStripe(object):
     def turn_all_off(self):
         """Turn off all LEDs"""
         with open("/dev/spidev0.0", "wb") as spidev:
-            COLOR_OFF = (NUL + NUL + NUL) * self.amount_of_leds
-            spidev.write(COLOR_OFF)
+            darkness = (NUL + NUL + NUL) * self.amount_of_leds
+            spidev.write(darkness)
 
 
 if __name__ == '__main__':

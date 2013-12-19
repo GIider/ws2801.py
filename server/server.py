@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Small socket server to interact with the led stripe from a remote client
 
-This should be called with the amount of leds in the stripe as argument
+This should be called with the amount of leds in the stripe as argument. It will then start up a server
+that listens for UDP packets on port 26667, expecting them to hold a hex string to pass to the LED stripe.
 """
 import sys
 
@@ -11,6 +12,8 @@ except ImportError:
     import socketserver
 
 from controller import LedStripe
+
+_all__ = ['HexLedStripeUDPHandler']
 
 
 class HexLedStripeUDPHandler(socketserver.BaseRequestHandler):

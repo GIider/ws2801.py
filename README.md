@@ -1,7 +1,7 @@
 ws2801.py
 =========
 
-Python toolkit to manipulate a led strip running the ws2801 driver from a Raspberry Pi
+Python toolkit to manipulate a LED stripe running the ws2801 driver from a Raspberry Pi
 
 Requirements
 ============
