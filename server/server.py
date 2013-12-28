@@ -13,7 +13,7 @@ except ImportError:
 
 from controller import LedStripe
 
-_all__ = ['HexLedStripeUDPHandler']
+__all__ = ['HexLedStripeUDPHandler']
 
 
 class HexLedStripeUDPHandler(socketserver.BaseRequestHandler):
